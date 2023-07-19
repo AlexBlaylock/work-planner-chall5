@@ -18,10 +18,11 @@ $(function () {
 $(".saveBtn").click(function(event) {
   event.preventDefault();
 
-  var elementSaver = $(this).parent().prop("id")
-  var hourSave = elementSaver.prop("id");
+  var elementSaver = $(this).siblings("textarea")
+  var hourSave = elementSaver.attr("id");
+  console.log(hourSave)
   var textSave = elementSaver.val();
-
+  console.log(textSave)
   // local storage save
   if (hourSave && text !== "") {
     console.log(hourSave, textSave);
