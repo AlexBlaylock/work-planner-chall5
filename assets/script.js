@@ -1,8 +1,13 @@
-function timeApplication() {
-  const currentTime = dayjs().format("Hr");
+var todayDisplay = $("#todayTime");
 
-  $()
-}
+function dayTimer() {
+
+var todayTime = dayjs().format("dddd, MMMM D YYYY, h:mm a");
+todayDisplay.text(todayTime);
+// setting interval to update every minute
+setInterval(dayTimer, 60000);
+
+};
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -26,3 +31,8 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+// save btn event
+
+// loads timer on page start
+dayTimer();
