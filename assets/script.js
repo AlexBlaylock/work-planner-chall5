@@ -10,17 +10,18 @@ $(document).ready(function() {
 
   function updateTime() {
     timeBlocks.each(function() {
-      var id = parseInt($(this).attr("id").split("-")[1]); // Extract the hour from the ID
+      var id = parseInt($(this).attr("id"));
       // If statements to update times to past, current, or future
       if (id < currentTime) {
-        $(this).addClass("past").removeClass("future present");
+        $(this).addClass("past");
       } else if (id > currentTime) {
-        $(this).addClass("future").removeClass("past present");
+        $(this).addClass("future");
       } else {
-        $(this).addClass("present").removeClass("past future");
+        $(this).addClass("present");
       }
     });
   }
+
   function loadSavedEvents() {
     timeSlots.forEach((element) => {
       var text = localStorage.getItem(parseInt(element.hourSave));
@@ -72,6 +73,7 @@ $(document).ready(function() {
   updateCurrentDay();
   fetchTimeSlots();
 });
+
 
 
 
