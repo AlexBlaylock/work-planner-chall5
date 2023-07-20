@@ -21,7 +21,57 @@ $(document).ready(function() {
       }
     });
   }
+  function loadSavedEvents() {
+    timeSlots.forEach((element) => {
+      var text = localStorage.getItem(parseInt(element.hourSave));
+      // Check if there was text in the textarea saved in local storage, and load it
+      if (text) {
+        element.text.val(text);
+      }
+    });
+  }
 
+  function fetchTimeSlots() {
+    // empty array to store time and text
+    var timeSlotsArray = [];
+    $("textarea").each(function() {
+      timeSlotsArray.push({
+        time: $(this).attr("id"),
+        text: $(this),
+      });
+    });
+    loadSavedEvents(timeSlotsArray);
+  }
+
+  setInterval(function() {
+    currentTime = parseInt(dayjs().format("H"));
+    updateTime();
+  }, 60000);
+
+  // save btn event
+  $(".saveBtn").click(function(event) {
+    event.preventDefault();
+
+    var elementSaver = $(this).siblings("textarea");
+    // get id of time
+    var time = elementSaver.attr("id");
+    console.log(time);
+    // get id of text
+    var text = elementSaver.val();
+    // logs text to see it's working properly
+    console.log(text);
+    // if statement to save to local storage
+    if (time && text !== "") {
+      console.log(time, text);
+      localStorage.setItem(time, text);
+    }
+  });
+
+  // loads on page start
+  loadSavedEvents();
+  updateCurrentDay();
+  fetchTimeSlots();
 });
+
 
 
