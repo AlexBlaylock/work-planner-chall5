@@ -10,44 +10,35 @@ $(document).ready(function() {
 
   function updateTime() {
     timeBlocks.each(function() {
-      var id = parseInt($(this).attr("id"));
+      var id = parseInt($(this).attr("id").split("-")[1]); // Extract the hour from the ID
       // If statements to update times to past, current, or future
       if (id < currentTime) {
-        $(this).addClass("past");
+        $(this).addClass("past").removeClass("future present");
       } else if (id > currentTime) {
-        $(this).addClass("future");
+        $(this).addClass("future").removeClass("past present");
       } else {
-        $(this).addClass("present");
+        $(this).addClass("present").removeClass("past future");
       }
     });
   }
 
   function loadSavedEvents() {
-    timeSlots.forEach((element) => {
-      var text = localStorage.getItem(parseInt(element.hourSave));
+    timeBlocks.each(function() {
+      var time = $(this).attr("id");
+      var text = localStorage.getItem(time);
       // Check if there was text in the textarea saved in local storage, and load it
       if (text) {
-        element.text.val(text);
+        $(this).find(".description").val(text);
       }
     });
   }
 
-  function fetchTimeSlots() {
-    // empty array to store time and text
-    var timeSlotsArray = [];
-    $("textarea").each(function() {
-      timeSlotsArray.push({
-        time: $(this).attr("id"),
-        text: $(this),
-      });
-    });
-    loadSavedEvents(timeSlotsArray);
-  }
+  // Call updateCurrentDay function initially and then every minute to update the timer
+  updateCurrentDay();
+  setInterval(updateCurrentDay, 60000);
 
-  setInterval(function() {
-    currentTime = parseInt(dayjs().format("H"));
-    updateTime();
-  }, 60000);
+  // Call updateTime function initially to initialize the color-coding
+  updateTime();
 
   // save btn event
   $(".saveBtn").click(function(event) {
@@ -70,9 +61,9 @@ $(document).ready(function() {
 
   // loads on page start
   loadSavedEvents();
-  updateCurrentDay();
-  fetchTimeSlots();
 });
+
+
 
 
 
