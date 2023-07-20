@@ -1,8 +1,21 @@
+
 $(document).ready(function() {
   var todayDisplay = $("#todayTime");
   var currentTime = parseInt(dayjs().format("H"));
   var timeBlocks = $(".time-block");
 
+  var timeSlots = [
+    { time: "hour-9", text: "" },
+    { time: "hour-10", text: "" },
+    { time: "hour-11", text: "" },
+    { time: "hour-12", text: "" },
+    { time: "hour-13", text: "" },
+    { time: "hour-14", text: "" },
+    { time: "hour-15", text: "" },
+    { time: "hour-16", text: "" },
+    { time: "hour-17", text: "" },
+  ];
+  
 
   function updateCurrentDay() {
     var todayTime = dayjs().format("dddd, MMMM D YYYY, h:mm a");
